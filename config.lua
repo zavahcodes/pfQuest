@@ -132,6 +132,10 @@ pfQuest_defconfig = {
     default = "0.3", type = "text", config = "nodefade" },
   { text = L["Highlight Nodes On Mouseover"],
     default = "1", type = "checkbox", config = "mouseover" },
+  { text = L["Show Quest Starters (Mini Map)"],
+    default = "1", type = "checkbox", config = "showqstartersmini" },
+  { text = L["Show Quest Enders (Mini Map)"],
+    default = "1", type = "checkbox", config = "showqendersmini" },
 
   { text = L["Routes"],
     default = nil, type = "header" },

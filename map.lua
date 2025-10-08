@@ -1014,7 +1014,14 @@ function pfMap:UpdateMinimap()
 
           pfMap.mpins[i].hl:Hide()
 
-          if pfQuest_config["showclustermini"] == "0" and pfMap.mpins[i].cluster then
+          -- minimap-only filtering of quest starters/enders by texture (avoid affecting objective spawn dots)
+          local tex = pfMap.mpins[i].texture
+          local isStarter = tex == pfQuestConfig.path.."\\img\\available" or tex == pfQuestConfig.path.."\\img\\available_c"
+          local isEnder   = tex == pfQuestConfig.path.."\\img\\complete"  or tex == pfQuestConfig.path.."\\img\\complete_c"
+          if (pfQuest_config["showqstartersmini"] == "0" and isStarter) or
+             (pfQuest_config["showqendersmini"] == "0" and isEnder) then
+            pfMap.mpins[i]:Hide()
+          elseif pfQuest_config["showclustermini"] == "0" and pfMap.mpins[i].cluster then
             pfMap.mpins[i]:Hide()
           elseif pfQuest_config["showspawnmini"] == "0" and addon == "PFQUEST" and not pfMap.mpins[i].texture then
             pfMap.mpins[i]:Hide()
