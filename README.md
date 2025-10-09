@@ -138,3 +138,26 @@ The "Reset" button will restore the default visibility of icons to match the set
 <img src="https://raw.githubusercontent.com/shagu/ShaguAddons/master/_img/pfQuest/chat-cli.png">
 
 The addon features a CLI interface which allows you to easilly create macros to show your favourite herb or mining-veins. Let's say you want to display all **Iron Deposit** deposits, then type in chat or create a macro with the text: `/db object Iron Deposit`. You can also display all mines on the map by typing: `/db mines`. This can be extended by giving the minimum and maximum required skill as paramter, like: `/db mines 150 225` to display all ores between skill 150 and 225. The `mines` parameter can also be replaced by `herbs`, `rares`, `chests` or `taxi` in order to show those instead. If `/db` doesn't work for you, there are also some other aliases available like `/shagu`, `pfquest` and `/pfdb`.
+
+---
+
+## Changes in this fork (zavahcodes/pfQuest)
+
+This fork includes a few quality-of-life additions on top of the original project:
+
+- Minimap-only quest giver visibility toggles
+	- New settings in Config → Map & Minimap:
+		- “Show Quest Starters (Mini Map)” – toggle NPCs that offer quests on the minimap.
+		- “Show Quest Enders (Mini Map)” – toggle NPCs that accept quest turn-ins on the minimap.
+	- Filtering is texture-based to avoid hiding objective spawn dots by accident. World map behavior is unchanged.
+
+- Quest Tracker text outline
+	- New setting in Config → Questing:
+		- “Quest Tracker Text Outline” – applies an outline to quest titles and objectives in the tracker.
+	- Takes effect immediately when toggled (no reload required).
+
+- Localizations
+	- Added localization keys for the new settings and basic translations for a few locales. Other locales fall back to the base key.
+
+Notes
+- Compatibility remains Vanilla/TBC/WotLK (as per original). These changes are additive and preserve existing default behavior when disabled.
