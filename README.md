@@ -7,6 +7,7 @@ The addon is not designed to be a quest- or tourguide, instead the goals are to 
 
 pfQuest is the successor of [ShaguQuest](https://shagu.org/ShaguQuest/) and has been entirely written from scratch. In comparison to [ShaguQuest](https://shagu.org/ShaguQuest/), this addon does not depend on any specific map- or questlog addon. It's designed to support the default interface aswell as every other addon. In case you experience any addon conflicts, please add an issue to the bugtracker.
 
+
 # Downloads
 You can check the [[Latest Changes]](https://github.com/shagu/pfQuest/commits/master) page to see what has changed recently.
 
