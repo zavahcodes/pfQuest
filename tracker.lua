@@ -325,6 +325,12 @@ function tracker.ButtonEvent(self)
 
   self:SetHeight(entryheight)
 
+  -- apply font (with optional outline) to main line
+  local outlineFlag = pfQuest_config["trackeroutline"] == "1" and "OUTLINE" or nil
+  if self.text and self.text.SetFont then
+    self.text:SetFont(pfUI.font_default, fontsize, outlineFlag)
+  end
+
   -- initialize and hide all objectives
   self.objectives = self.objectives or {}
   for id, obj in pairs(self.objectives) do obj:Hide() end
@@ -394,10 +400,14 @@ function tracker.ButtonEvent(self)
 
         if not self.objectives[i] then
           self.objectives[i] = self:CreateFontString(nil, "HIGH", "GameFontNormal")
-          self.objectives[i]:SetFont(pfUI.font_default, fontsize)
           self.objectives[i]:SetJustifyH("LEFT")
           self.objectives[i]:SetPoint("TOPLEFT", 20, -fontsize*i-6)
           self.objectives[i]:SetPoint("TOPRIGHT", -10, -fontsize*i-6)
+        end
+
+        -- ensure font is (re)applied every update to reflect outline/size changes
+        if self.objectives[i].SetFont then
+          self.objectives[i]:SetFont(pfUI.font_default, fontsize, outlineFlag)
         end
 
         if objNum and objNeeded then
