@@ -932,18 +932,27 @@ function pfMap:UpdateNodes()
         elseif pfQuest_config["showspawn"] == "0" and addon == "PFQUEST" and not pfMap.pins[i].texture then
           pfMap.pins[i]:Hide()
         else
-          -- populate quest list on map
-          for title, node in pairs(pfMap.pins[i].node) do
-            pfQuest.tracker.ButtonAdd(title, node)
+          -- world map filtering of quest starters/enders by texture (similar to minimap)
+          local tex = pfMap.pins[i].texture
+          local isStarter = tex == pfQuestConfig.path.."\\img\\available" or tex == pfQuestConfig.path.."\\img\\available_c"
+          local isEnder   = tex == pfQuestConfig.path.."\\img\\complete"  or tex == pfQuestConfig.path.."\\img\\complete_c"
+          if (pfQuest_config["showqstartersworld"] == "0" and isStarter) or
+             (pfQuest_config["showqendersworld"] == "0" and isEnder) then
+            pfMap.pins[i]:Hide()
+          else
+            -- populate quest list on map
+            for title, node in pairs(pfMap.pins[i].node) do
+              pfQuest.tracker.ButtonAdd(title, node)
+            end
+
+            x = x / 100 * WorldMapButton:GetWidth()
+            y = y / 100 * WorldMapButton:GetHeight()
+
+            pfMap.pins[i]:ClearAllPoints()
+            pfMap.pins[i]:SetPoint("CENTER", WorldMapButton, "TOPLEFT", x, -y)
+
+            pfMap.pins[i]:Show()
           end
-
-          x = x / 100 * WorldMapButton:GetWidth()
-          y = y / 100 * WorldMapButton:GetHeight()
-
-          pfMap.pins[i]:ClearAllPoints()
-          pfMap.pins[i]:SetPoint("CENTER", WorldMapButton, "TOPLEFT", x, -y)
-
-          pfMap.pins[i]:Show()
         end
 
         i = i + 1

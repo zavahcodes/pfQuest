@@ -147,10 +147,12 @@ The addon features a CLI interface which allows you to easilly create macros to 
 This fork includes a few quality-of-life additions on top of the original project:
 
 - Minimap-only quest giver visibility toggles
-	- New settings in Config → Map & Minimap:
-		- “Show Quest Starters (Mini Map)” – toggle NPCs that offer quests on the minimap.
-		- “Show Quest Enders (Mini Map)” – toggle NPCs that accept quest turn-ins on the minimap.
-	- Filtering is texture-based to avoid hiding objective spawn dots by accident. World map behavior is unchanged.
+  - New settings in Config → Map & Minimap:
+    - "Show Quest Starters (Mini Map)" – toggle NPCs that offer quests on the minimap.
+    - "Show Quest Enders (Mini Map)" – toggle NPCs that accept quest turn-ins on the minimap.
+    - "Show Quest Starters (World Map)" – toggle NPCs that offer quests on the world map.
+    - "Show Quest Enders (World Map)" – toggle NPCs that accept quest turn-ins on the world map.
+  - Filtering is texture-based to avoid hiding objective spawn dots by accident.
 
 - Quest Tracker text outline
   - New setting in Config → Questing:
@@ -167,5 +169,6 @@ This fork includes a few quality-of-life additions on top of the original projec
 - Localizations
   - Added localization keys for the new settings and basic translations for a few locales. Other locales fall back to the base key.
 
-Notes
+## Notes
+
 - Compatibility remains Vanilla/TBC/WotLK (as per original). These changes are additive and preserve existing default behavior when disabled.
