@@ -161,10 +161,11 @@ This fork includes a few quality-of-life additions on top of the original projec
 
 - Map node interaction controls
   - New settings in Config → Map & Minimap:
-    - “Disable World Map Node Interaction” – pfQuest pins stop capturing hover/click; native map blobs stay interactive.
-    - “Disable Minimap Node Interaction” – same concept for the minimap.
-    - “Disable World Map Node Tooltips” and “Disable Minimap Node Tooltips” – keep pins visible but skip pfQuest tooltips/highlights.
+    - "Disable World Map Node Interaction" – pfQuest pins stop capturing hover/click; native map blobs stay interactive.
+    - "Disable Minimap Node Interaction" – same concept for the minimap.
+    - "Disable World Map Node Tooltips" and "Disable Minimap Node Tooltips" – keep pins visible but skip pfQuest tooltips/highlights.
   - Useful for players who only want pfQuest to draw icons while keeping default map interactions untouched.
+  - Hold **Shift** to temporarily re-enable disabled interactions while the key is pressed.
 
 - Localizations
   - Added localization keys for the new settings and basic translations for a few locales. Other locales fall back to the base key.
