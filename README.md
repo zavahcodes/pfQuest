@@ -153,12 +153,19 @@ This fork includes a few quality-of-life additions on top of the original projec
 	- Filtering is texture-based to avoid hiding objective spawn dots by accident. World map behavior is unchanged.
 
 - Quest Tracker text outline
-	- New setting in Config → Questing:
-		- “Quest Tracker Text Outline” – applies an outline to quest titles and objectives in the tracker.
-	- Takes effect immediately when toggled (no reload required).
+  - New setting in Config → Questing:
+    - “Quest Tracker Text Outline” – applies an outline to quest titles and objectives in the tracker.
+  - Takes effect immediately when toggled (no reload required).
+
+- Map node interaction controls
+  - New settings in Config → Map & Minimap:
+    - “Disable World Map Node Interaction” – pfQuest pins stop capturing hover/click; native map blobs stay interactive.
+    - “Disable Minimap Node Interaction” – same concept for the minimap.
+    - “Disable World Map Node Tooltips” and “Disable Minimap Node Tooltips” – keep pins visible but skip pfQuest tooltips/highlights.
+  - Useful for players who only want pfQuest to draw icons while keeping default map interactions untouched.
 
 - Localizations
-	- Added localization keys for the new settings and basic translations for a few locales. Other locales fall back to the base key.
+  - Added localization keys for the new settings and basic translations for a few locales. Other locales fall back to the base key.
 
 Notes
 - Compatibility remains Vanilla/TBC/WotLK (as per original). These changes are additive and preserve existing default behavior when disabled.

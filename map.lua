@@ -634,12 +634,28 @@ function pfMap:NodeClick()
 end
 
 function pfMap:NodeEnter()
+  local isWorldMapNode = (this:GetParent() == WorldMapButton)
+  if (isWorldMapNode and pfQuest_config["disablemapmouse"] == "1") or
+     (not isWorldMapNode and pfQuest_config["disableminimapmouse"] == "1") then
+    return
+  end
+
+  local disableTooltip = isWorldMapNode and pfQuest_config["disablemouseovermap"] or pfQuest_config["disablemouseovermini"]
+
+  if disableTooltip == "1" then
+    if compat.client >= 30300 and isWorldMapNode then
+      WorldMapPOIFrame.allowBlobTooltip = false
+    end
+    pfMap.highlight = nil
+    return
+  end
+
   -- wotlk: need to disable blop tooltips first
   if compat.client >= 30300 then
     WorldMapPOIFrame.allowBlobTooltip = false
   end
 
-  local tooltip = this:GetParent() == WorldMapButton and WorldMapTooltip or GameTooltip
+  local tooltip = isWorldMapNode and WorldMapTooltip or GameTooltip
   tooltip:SetOwner(this, "ANCHOR_LEFT")
   this.spawn = this.spawn or UNKNOWN
   tooltip:SetText(this.spawn..(pfQuest_config.showids == "1" and " |cffcccccc("..this.spawnid..")|r" or ""), .3, 1, .8)
@@ -684,6 +700,21 @@ function pfMap:NodeLeave()
   pfMap.highlight = nil
 end
 
+function pfMap:SetNodeMouseState(frame)
+  local isWorldMapNode = (frame:GetParent() == WorldMapButton)
+  local disableMouse = (isWorldMapNode and pfQuest_config["disablemapmouse"] == "1") or
+                       (not isWorldMapNode and pfQuest_config["disableminimapmouse"] == "1")
+
+  frame:EnableMouse(not disableMouse)
+  frame:EnableMouseWheel(not disableMouse)
+
+  if disableMouse then
+    frame:SetScript("OnClick", nil)
+  else
+    frame:SetScript("OnClick", frame.func or pfMap.NodeClick)
+  end
+end
+
 function pfMap:BuildNode(name, parent)
   local f = CreateFrame("Button", name, parent)
 
@@ -702,6 +733,7 @@ function pfMap:BuildNode(name, parent)
   f.Animate = NodeAnimate
   f:SetScript("OnEnter", pfMap.NodeEnter)
   f:SetScript("OnLeave", pfMap.NodeLeave)
+  f:SetScript("OnClick", pfMap.NodeClick)
 
   f.tex = f:CreateTexture(nil, "BACKGROUND")
   f.tex:SetAllPoints(f)
@@ -715,6 +747,8 @@ function pfMap:BuildNode(name, parent)
   f.hl:SetPoint("TOPLEFT", f, "TOPLEFT", -5, 5)
   f.hl:SetWidth(12)
   f.hl:SetHeight(12)
+
+  pfMap:SetNodeMouseState(f)
   return f
 end
 
@@ -832,7 +866,7 @@ function pfMap:UpdateNode(frame, node, color, obj, distance)
   end
 
   if frame.updateTexture or frame.updateVertex or frame.updateColor or frame.updateLayer then
-    frame:SetScript("OnClick", (frame.func or pfMap.NodeClick))
+    pfMap:SetNodeMouseState(frame)
   end
 
   local highlight = frame.texture and pfMap.highlightdb[frame][pfMap.highlight] and true or nil
@@ -851,6 +885,8 @@ function pfMap:UpdateNode(frame, node, color, obj, distance)
   end
 
   frame.node = node
+
+  pfMap:SetNodeMouseState(frame)
 end
 
 function pfMap:UpdateNodes()
