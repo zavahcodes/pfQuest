@@ -35,6 +35,21 @@ controlkey:SetScript("OnUpdate", function()
   end
 end)
 
+-- similar system for shift key to enable temporary interaction override
+local shiftkey = CreateFrame("Frame", "pfQuestShiftKey", UIParent)
+shiftkey.pressed = false
+shiftkey:SetScript("OnUpdate", function()
+  if ( this.throttle or .1) > GetTime() then return else this.throttle = GetTime() + .1 end
+  if WorldMapFrame:IsShown() and MouseIsOver(WorldMapFrame) or MouseIsOver(pfMap.drawlayer) then
+    local newState = IsShiftKeyDown()
+    if this.pressed ~= newState then
+      this.pressed = newState
+      -- Update all visible nodes when shift state changes
+      pfMap:UpdateNodeMouseStates()
+    end
+  end
+end)
+
 local validmaps = setmetatable({},{__mode="kv"})
 local rgbcache = setmetatable({},{__mode="kv"})
 local minimap_sizes = pfDB["minimap"]
@@ -635,14 +650,19 @@ end
 
 function pfMap:NodeEnter()
   local isWorldMapNode = (this:GetParent() == WorldMapButton)
-  if (isWorldMapNode and pfQuest_config["disablemapmouse"] == "1") or
-     (not isWorldMapNode and pfQuest_config["disableminimapmouse"] == "1") then
+  
+  -- Check if interaction is disabled but can be overridden with Shift
+  local disableInteraction = (isWorldMapNode and pfQuest_config["disablemapmouse"] == "1") or
+                              (not isWorldMapNode and pfQuest_config["disableminimapmouse"] == "1")
+  local shiftOverride = disableInteraction and shiftkey.pressed
+  
+  if disableInteraction and not shiftOverride then
     return
   end
 
   local disableTooltip = isWorldMapNode and pfQuest_config["disablemouseovermap"] or pfQuest_config["disablemouseovermini"]
 
-  if disableTooltip == "1" then
+  if disableTooltip == "1" and not shiftOverride then
     if compat.client >= 30300 and isWorldMapNode then
       WorldMapPOIFrame.allowBlobTooltip = false
     end
@@ -705,13 +725,33 @@ function pfMap:SetNodeMouseState(frame)
   local disableMouse = (isWorldMapNode and pfQuest_config["disablemapmouse"] == "1") or
                        (not isWorldMapNode and pfQuest_config["disableminimapmouse"] == "1")
 
-  frame:EnableMouse(not disableMouse)
-  frame:EnableMouseWheel(not disableMouse)
+  -- Allow temporary override with Shift key
+  local shiftOverride = disableMouse and shiftkey.pressed
+  local enableMouse = not disableMouse or shiftOverride
 
-  if disableMouse then
-    frame:SetScript("OnClick", nil)
-  else
+  frame:EnableMouse(enableMouse)
+  frame:EnableMouseWheel(enableMouse)
+
+  if enableMouse then
     frame:SetScript("OnClick", frame.func or pfMap.NodeClick)
+  else
+    frame:SetScript("OnClick", nil)
+  end
+end
+
+function pfMap:UpdateNodeMouseStates()
+  -- Update all world map pins
+  for i = 1, table.getn(pfMap.pins) do
+    if pfMap.pins[i] and pfMap.pins[i]:IsShown() then
+      pfMap:SetNodeMouseState(pfMap.pins[i])
+    end
+  end
+  
+  -- Update all minimap pins
+  for i = 1, table.getn(pfMap.mpins) do
+    if pfMap.mpins[i] and pfMap.mpins[i]:IsShown() then
+      pfMap:SetNodeMouseState(pfMap.mpins[i])
+    end
   end
 end
 
