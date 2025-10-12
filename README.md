@@ -146,6 +146,13 @@ The addon features a CLI interface which allows you to easilly create macros to 
 
 This fork includes a few quality-of-life additions on top of the original project:
 
+- Quest resynchronization UI button
+  - New setting in Config → User Data:
+    - "Resynchronize Quests" – provides a convenient GUI button that performs the same function as `/pfdb query`.
+  - Queries the server for completed quests and updates your quest history accordingly.
+  - Includes server compatibility checks and user feedback messages.
+  - Available in multiple languages (English, Spanish, Portuguese).
+
 - Minimap-only quest giver visibility toggles
   - New settings in Config → Map & Minimap:
     - "Show Quest Starters (Mini Map)" – toggle NPCs that offer quests on the minimap.

@@ -37,6 +37,14 @@ local reset = {
 
     StaticPopup_Show("PFQUEST_RESET")
   end,
+  quests = function()
+    if pfDatabase and pfDatabase.QueryServer then
+      pfDatabase:QueryServer()
+      DEFAULT_CHAT_FRAME:AddMessage("|cff33ffccpf|cffffffffQuest: " .. L["Resynchronizing quests with server..."])
+    else
+      DEFAULT_CHAT_FRAME:AddMessage("|cff33ffccpf|cffffffffQuest: " .. L["Quest resynchronization is not available on this server."])
+    end
+  end,
   everything = function()
     local dialog = StaticPopupDialogs["PFQUEST_RESET"]
     dialog.text = L["Do you really want to reset everything?"]
@@ -171,6 +179,8 @@ pfQuest_defconfig = {
 
   { text = L["User Data"],
     default = nil, type = "header" },
+  { text = L["Resynchronize Quests"],
+    default = "1", type = "button", func = reset.quests },
   { text = L["Reset Configuration"],
     default = "1", type = "button", func = reset.config },
   { text = L["Reset Quest History"],
