@@ -222,8 +222,6 @@ pfMap.tooltip:SetScript("OnShow", function()
   if focus and focus.GetName and strsub((focus:GetName() or ""),0,10) == "QuestTimer" then return end
   -- abort if tooltips are disabled
   if pfQuest_config.showtooltips == "0" then return end
-  -- abort if NPC quest tooltips are disabled
-  if pfQuest_config.npctooltips == "0" then return end
 
   local name = getglobal("GameTooltipTextLeft1") and getglobal("GameTooltipTextLeft1"):GetText() or "__NONE__"
   local zone = pfMap:GetMapID(GetCurrentMapContinent(), GetCurrentMapZone())
@@ -294,6 +292,11 @@ function pfMap:ShowTooltip(meta, tooltip)
         -- handle active quests
         local objectives = GetNumQuestLeaderBoards(qid)
         catch = true
+
+        -- if option is enabled, skip showing info for accepted quests
+        if pfQuest_config.npctooltips == "1" then
+          return
+        end
 
         local symbol = ( complete or objectives == 0 ) and "|cff555555[|cffffcc00?|cff555555]|r " or "|cff555555[|cffffcc00!|cff555555]|r "
         tooltip:AddLine(symbol .. meta["quest"], 1, 1, 0)

@@ -153,12 +153,12 @@ This fork includes a few quality-of-life additions on top of the original projec
   - Includes server compatibility checks and user feedback messages.
   - Available in multiple languages (English, Spanish, Portuguese).
 
-- NPC tooltip quest information control
+- Smart NPC tooltip quest information control
   - New setting in Config → General:
-    - "Show Quest Info On NPC Tooltips" – toggle quest progress information that appears when hovering over NPCs.
-  - When disabled, NPC tooltips will not show quest status, progress, or related quest information.
-  - Provides cleaner tooltips for users who prefer minimal information display.
-  - Works independently of the main tooltip system.
+    - "Hide Accepted Quest Info On NPC Tooltips" – intelligently filters quest information in NPC tooltips.
+  - When enabled, only shows quest information for NEW/UNACCEPTED quests, hiding info for quests already in your quest log.
+  - Helps discover new available quests while reducing tooltip clutter from accepted quests.
+  - Perfect for identifying new quest opportunities without information overload.
 
 - Minimap-only quest giver visibility toggles
   - New settings in Config → Map & Minimap:
