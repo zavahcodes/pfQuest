@@ -1007,7 +1007,10 @@ function pfMap:UpdateNodes()
 
   -- hide remaining pins
   for j=i, table.getn(pfMap.pins) do
-    if pfMap.pins[j] then pfMap.pins[j]:Hide() end
+    if pfMap.pins[j] then 
+      pfMap.pins[j]:Hide()
+      -- DEFAULT_CHAT_FRAME:AddMessage("|cff33ffccpfQuest|r: Ocultando pin restante " .. j)
+    end
   end
 end
 

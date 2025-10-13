@@ -146,6 +146,15 @@ The addon features a CLI interface which allows you to easilly create macros to 
 
 This fork includes a few quality-of-life additions on top of the original project:
 
+### Bug Fixes
+
+- **Fixed quest objective icons disappearing from map (v7.0.2)**
+  - Resolved an issue where quest objective icons would disappear after accepting new quests, leaving only quest giver icons visible
+  - The bug occurred because when processing new quests, the addon would remove all quest nodes but only re-add objectives for the newly changed quests
+  - Now properly re-adds all active quest objectives when the quest giver update is triggered, ensuring nothing disappears from the map
+
+### Features
+
 - Quest resynchronization UI button
   - New setting in Config → User Data:
     - "Resynchronize Quests" – provides a convenient GUI button that performs the same function as `/pfdb query`.

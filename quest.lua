@@ -142,6 +142,20 @@ pfQuest:SetScript("OnUpdate", function()
 
   if this.updateQuestGivers == true then
     pfQuest:Debug("Update Quest|cff33ffcc Givers")
+    
+    -- Re-añadir objetivos de todas las quests activas
+    if pfQuest_config["trackingmethod"] ~= 4 then
+      for questid, data in pairs(pfQuest.questlog) do
+        if pfQuest_config["trackingmethod"] ~= 3 and
+          (pfQuest_config["trackingmethod"] ~= 2 or IsQuestWatched(data.qlogid))
+        then
+          local meta = { ["addon"] = "PFQUEST", ["qlogid"] = data.qlogid }
+          pfDatabase:SearchQuestID(questid, meta)
+        end
+      end
+    end
+    
+    -- Añadir quest givers si está habilitado
     if pfQuest_config["trackingmethod"] ~= 4 and
       pfQuest_config["allquestgivers"] == "1"
     then
