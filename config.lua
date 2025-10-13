@@ -76,6 +76,8 @@ pfQuest_defconfig = {
     default = "1", type = "text", config = "mindropchance" },
   { text = L["Show Tooltips"],
     default = "1", type = "checkbox", config = "showtooltips" },
+  { text = L["Show Quest Info On NPC Tooltips"],
+    default = "1", type = "checkbox", config = "npctooltips" },
   { text = L["Show Help On Tooltips"],
     default = "1", type = "checkbox", config = "tooltiphelp" },
   { text = L["Display Available Quest Givers"],
